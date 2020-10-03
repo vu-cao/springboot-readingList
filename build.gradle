@@ -1,0 +1,46 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+    id 'com.palantir.docker' version '0.25.0'
+    id "com.palantir.docker-run" version "0.25.0"
+}
+
+group = 'cao.vu'
+version = '0.1.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+docker {
+    name "vucao/${project.name}:${project.version}"
+    copySpec.from("build/libs").into("build/libs")
+    dockerClean
+}
+
+dockerRun {
+    name "${project.name}"
+    image "vucao/${project.name}:${project.version}"
+    ports '8000:8000'
+}

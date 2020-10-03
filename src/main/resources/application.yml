@@ -1,0 +1,16 @@
+spring:
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      trigger-file: .trigger
+
+server:
+  port: 8000
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    cao.vu.readinglist.dao: DEBUG
+    cao.vu.readinglist.config: DEBUG
+
