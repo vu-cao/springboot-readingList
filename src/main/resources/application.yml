@@ -1,12 +1,6 @@
 spring:
   thymeleaf:
     cache: false
-  devtools:
-    restart:
-      trigger-file: .trigger
-
-server:
-  port: 8000
 
 logging:
   level:
